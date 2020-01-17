@@ -21,7 +21,7 @@ public class MailAdapterTest {
     @Test
     void should_return_2_clients() throws Exception{
 
-        Client hamid=new Client("hamid","hamida",null);
+        Client hamid=new Client("hamid","hamida",null,null);
 
        String result=  mailAdapter.createMail(hamid,TEMPLATE01);
 

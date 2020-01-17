@@ -11,14 +11,13 @@ public class SMTPConfig {
 
     public static Properties get(){
 
-        Properties prop = new Properties();
-        prop.put("mail.smtp.host", "smtp.gmail.com");
-        prop.put("mail.smtp.port", "465");
-        prop.put("mail.smtp.auth", "true");
-        prop.put("mail.smtp.socketFactory.port", "465");
-        prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.starttls.enable", "true") ;
+        props.put("mail.smtp.auth", "true") ;
 
-        return prop;
+        return props;
 
     }
 
