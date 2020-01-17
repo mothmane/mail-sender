@@ -19,7 +19,7 @@ public class EMAILServiceTest {
     @Test
     void should_return_2_clients() throws Exception{
 
-       emailService.send("tahifa.med@gmail.com","bla bla bla", SMTPConfig.session("",""));
+       emailService.send("tahifa.med@gmail.com","bla bla bla", SMTPConfig.session("maniar.othmane@gmail.com",""));
 
 
     }

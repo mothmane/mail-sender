@@ -10,6 +10,7 @@ import java.util.List;
 public class XLSClientExtractorTest {
 
     private final String CLIENTS01="src/test/resources/clients01.xlsx";
+    private final String DEMO="src/test/resources/example.xlsx";
     private ClientExtractor extrator;
 
     @BeforeEach
@@ -24,10 +25,18 @@ public class XLSClientExtractorTest {
         List<Client> actual=extrator.extractClients(CLIENTS01);
 
 
-        List<Client> expected=List.of(new Client("hamid","hamida","hamid.hamida@hamid.com"),
-                                      new Client("jalil","jalila","jalil.jalila@jalil.com"));
+        List<Client> expected=List.of(new Client("hamid","hamida","hamid.hamida@hamid.com",null),
+                                      new Client("jalil","jalila","jalil.jalila@jalil.com",null));
 
         Assertions.assertThat(actual).isEqualTo(expected);
+
+    }
+    @Test
+    void should_return_all_clients() throws Exception{
+
+        List<Client> actual=extrator.extractClients(DEMO);
+
+        actual.forEach(System.out::println);
 
     }
 }

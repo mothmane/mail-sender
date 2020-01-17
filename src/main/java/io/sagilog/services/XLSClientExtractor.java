@@ -34,11 +34,12 @@ public class XLSClientExtractor implements ClientExtractor {
 
     public Client extractClient(Row row) {
 
-        String firstName=convertCellToString(0,row);
-        String lastName=convertCellToString(1,row);
-        String email=convertCellToString(2,row);
+        String firstName=convertCellToString(3,row);
+        String lastName=convertCellToString(4,row);
+        String email=convertCellToString(7,row);
+        String company=convertCellToString(1,row);
 
-        return new Client(firstName,lastName,email);
+        return new Client(firstName,lastName,email,company);
 
     }
 
