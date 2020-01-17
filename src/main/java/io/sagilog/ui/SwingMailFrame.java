@@ -4,6 +4,7 @@ import io.sagilog.config.SMTPConfig;
 import io.sagilog.services.EMAILService;
 
 import javax.swing.*;
+import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,7 +13,7 @@ import java.util.Properties;
 
 public class SwingMailFrame extends JFrame {
     //private ConfigUtility configUtil = new ConfigUtility();
-    private EMAILService emailService= new EMAILService();
+    private EMAILService emailService= new EMAILService(SMTPConfig.session("username","passw"));
 
     private JMenuBar menuBar = new JMenuBar();
     private JMenu menuFile = new JMenu("File");
@@ -130,15 +131,15 @@ public class SwingMailFrame extends JFrame {
 
         File[] attachFiles = null;
 
-       /* if (!filePicker.getSelectedFilePath().equals("")) {
+      /* if (!filePicker.getSelectedFilePath().equals("")) {
             File selectedFile = new File(filePicker.getSelectedFilePath());
             attachFiles = new File[] {selectedFile};
-        }
-        */
+        }*/
+
 
         try {
             Properties smtpProperties = SMTPConfig.get();
-            emailService.send(toAddress,message, SMTPConfig.session("maniar.othmane@gmail.com","Letmeingm"));
+           // emailService.send();
 
 
           //  EmailUtility.sendEmail(smtpProperties, toAddress, subject, message, attachFiles);
@@ -154,30 +155,25 @@ public class SwingMailFrame extends JFrame {
     }
 
     private boolean validateFields() {
-        if (fieldTo.getText().equals("")) {
+
+        if( !validateField(fieldTo,"To address")
+                || !validateField(fieldSubject,"subject")
+                || !validateField(mailPane,"mail")
+           ){
+            return false;
+          }
+
+        return true;
+    }
+
+    private boolean validateField(JTextComponent field, String fieldName){
+        if (field.getText().equals("")) {
             JOptionPane.showMessageDialog(this,
-                    "Please enter To address!",
+                    "Please enter "+fieldName+"!",
                     "Error", JOptionPane.ERROR_MESSAGE);
-            fieldTo.requestFocus();
+            field.requestFocus();
             return false;
         }
-
-        if (fieldSubject.getText().equals("")) {
-            JOptionPane.showMessageDialog(this,
-                    "Please enter subject!",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            fieldSubject.requestFocus();
-            return false;
-        }
-
-        if (mailPane.getText().equals("")) {
-            JOptionPane.showMessageDialog(this,
-                    "Please enter message!",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            mailPane.requestFocus();
-            return false;
-        }
-
         return true;
     }
 
