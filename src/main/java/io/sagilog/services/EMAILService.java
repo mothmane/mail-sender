@@ -1,8 +1,6 @@
 package io.sagilog.services;
 
-import io.sagilog.config.SMTPConfig;
 import io.sagilog.domain.Mail;
-
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -14,6 +12,7 @@ import javax.mail.internet.MimeMessage;
 public class EMAILService {
 
     private Session session;
+    private final String MESSAGE_TYPE = "text/html";
 
     public EMAILService(Session session){
         this.session=session;
@@ -27,7 +26,7 @@ public class EMAILService {
             message.setFrom(new InternetAddress(mail.getFrom()));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(mail.getContent()));
             message.setSubject(mail.getSubject());
-            message.setContent(mail, "text/html");
+            message.setContent(mail, MESSAGE_TYPE);
             Transport.send(message);
 
         } catch (MessagingException mex) {

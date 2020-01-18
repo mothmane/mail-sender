@@ -11,7 +11,7 @@ import java.util.List;
 public class XLSClientExtractorTest {
 
     private final String CLIENTS01="src/test/resources/clients01.xlsx";
-    private final String DEMO="src/test/resources/example.xlsx";
+    private final String DEMO="src/test/resources/clients.xlsx";
     private ClientExtractor extrator;
 
     @BeforeEach

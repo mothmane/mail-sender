@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public class XLSClientExtractor implements ClientExtractor {
 
@@ -22,7 +22,7 @@ public class XLSClientExtractor implements ClientExtractor {
     private Integer LAST_NAME_INDEX=4;
     private Integer EMAIL_INDEX=7;
     private Integer COMPANY_INDEX=1;
-    private Integer DATE_INDEX=8;
+    private Integer DATE_INDEX=9;
     private DataFormatter dataFormatter=new DataFormatter();
 
 
@@ -51,9 +51,10 @@ public class XLSClientExtractor implements ClientExtractor {
     }
 
     private List<Client> readClients(Sheet sheet){
-       return  Stream.generate(sheet.iterator()::next)
+        Iterable<Row> iterable = () -> sheet.iterator();
+       return  StreamSupport.stream(iterable.spliterator(), false)
                .map(this::extractClient)
-               .collect(Collectors.toUnmodifiableList());
+               .collect(Collectors.toList());
 
     }
 
@@ -62,7 +63,11 @@ public class XLSClientExtractor implements ClientExtractor {
 
     }
     private LocalDate convertCellToLocalDate(int index,Row row){
-        return LocalDate.parse(dataFormatter.formatCellValue(row.getCell(index)));
+        try {
+           return  LocalDate.parse(dataFormatter.formatCellValue(row.getCell(index)));
+        }catch (Exception e){
+            return LocalDate.now();
+        }
 
     }
 
