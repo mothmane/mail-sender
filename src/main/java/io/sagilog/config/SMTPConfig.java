@@ -2,27 +2,13 @@ package io.sagilog.config;
 
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 public class SMTPConfig {
-    private static Properties props ;
+    private static Properties props;
 
     public static Properties get() {
-        if(props!=null) {
-            props = new Properties();
-            try (InputStream input = new FileInputStream("smtp.properties")) {
-                props.load(input);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        return props;
-
+        return PropertiesLoader.load("smtp.properties");
     }
 
     public static Session session(String username, String password) {

@@ -1,15 +1,15 @@
 package io.sagilog.services;
 
 import io.sagilog.domain.Client;
-
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -53,7 +53,7 @@ public class XLSClientExtractor implements ClientExtractor {
     private List<Client> readClients(Sheet sheet){
        return  Stream.generate(sheet.iterator()::next)
                .map(this::extractClient)
-               .collect(Collectors.toList());
+               .collect(Collectors.toUnmodifiableList());
 
     }
 
