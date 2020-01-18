@@ -13,7 +13,6 @@ public class EMAILServiceTest {
 
     @BeforeEach
     void init(){
-
         emailService=new EMAILService(SMTPConfig.session("maniar.othmane@gmail.com",""));
     }
 

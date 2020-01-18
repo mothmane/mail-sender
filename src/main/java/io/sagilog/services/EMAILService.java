@@ -18,13 +18,12 @@ public class EMAILService {
     public EMAILService(Session session){
         this.session=session;
     }
-    
+
     public void send(Mail mail){
 
         try {
 
             MimeMessage message = new MimeMessage(session);
-
             message.setFrom(new InternetAddress(mail.getFrom()));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(mail.getContent()));
             message.setSubject(mail.getSubject());

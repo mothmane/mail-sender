@@ -7,53 +7,68 @@ import org.apache.poi.ss.usermodel.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class XLSClientExtractor implements ClientExtractor {
 
     private Integer DEFAULT_SHEET_INDEX = 0;
 
+    private Integer FIRST_NAME_INDEX=3;
+    private Integer LAST_NAME_INDEX=4;
+    private Integer EMAIL_INDEX=7;
+    private Integer COMPANY_INDEX=1;
+    private Integer DATE_INDEX=8;
+    private DataFormatter dataFormatter=new DataFormatter();
 
-    public Client extractClient(String line) {
-        return null;
-    }
+
 
     public List<Client> extractClients(String fileName)  throws InvalidFormatException,IOException {
 
-        Workbook workbook = WorkbookFactory.create(new File(fileName));
-        Sheet sheet = workbook.getSheetAt(DEFAULT_SHEET_INDEX);
+        var workbook = WorkbookFactory.create(new File(fileName));
+        var sheet = workbook.getSheetAt(DEFAULT_SHEET_INDEX);
 
-        List<Client> clients=readClients(sheet);
-
+        var clients=readClients(sheet);
 
         workbook.close();
-
         return clients;
     }
 
-    public Client extractClient(Row row) {
+    private Client extractClient(Row row) {
 
-        String firstName=convertCellToString(3,row);
-        String lastName=convertCellToString(4,row);
-        String email=convertCellToString(7,row);
-        String company=convertCellToString(1,row);
+        var firstName=convertCellToString(FIRST_NAME_INDEX,row);
+        var lastName=convertCellToString(LAST_NAME_INDEX,row);
+        var email=convertCellToString(EMAIL_INDEX,row);
+        var company=convertCellToString(COMPANY_INDEX,row);
+        var lastMailSent=convertCellToLocalDate(DATE_INDEX,row);
 
-        return new Client(firstName,lastName,email,company);
+        return new Client(firstName,lastName,email,company, lastMailSent);
 
     }
 
-    private List<Client> readClients( Sheet sheet){
-        List<Client> clients= new ArrayList<>();
-        sheet.forEach(row -> {
-            clients.add(extractClient(row));
-        });
-        return clients;
+    private List<Client> readClients(Sheet sheet){
+       return  Stream.generate(sheet.iterator()::next)
+               .map(this::extractClient)
+               .collect(Collectors.toList());
+
     }
 
     private String convertCellToString(int index,Row row){
-        DataFormatter dataFormatter = new DataFormatter();
-       return  dataFormatter.formatCellValue(row.getCell(index));
+        return  dataFormatter.formatCellValue(row.getCell(index));
 
     }
+    private LocalDate convertCellToLocalDate(int index,Row row){
+        return LocalDate.parse(dataFormatter.formatCellValue(row.getCell(index)));
+
+    }
+
+
+
+
+
+
 }

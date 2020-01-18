@@ -5,6 +5,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class XLSClientExtractorTest {
@@ -25,8 +26,8 @@ public class XLSClientExtractorTest {
         List<Client> actual=extrator.extractClients(CLIENTS01);
 
 
-        List<Client> expected=List.of(new Client("hamid","hamida","hamid.hamida@hamid.com",null),
-                                      new Client("jalil","jalila","jalil.jalila@jalil.com",null));
+        List<Client> expected=List.of(new Client("hamid","hamida","hamid.hamida@hamid.com",null, LocalDate.now()),
+                                      new Client("jalil","jalila","jalil.jalila@jalil.com",null,LocalDate.now()));
 
         Assertions.assertThat(actual).isEqualTo(expected);
 
