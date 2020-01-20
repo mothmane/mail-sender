@@ -18,7 +18,7 @@ public class EMAILServiceTest {
 
     @BeforeEach
     void init(){
-        emailService=new EMAILService(SMTPConfig.session("tahifa.med@gmail.com","otmjjwukkoaqtant"));
+        emailService=new EMAILService(SMTPConfig.session("tahifa.med@gmail.com",""));
     }
 
     @Test
