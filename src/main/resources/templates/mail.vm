@@ -1,0 +1,44 @@
+<html>
+<head>
+    <style>
+      #include("src/main/resources/templates/style.css")
+    </style>
+</head>
+    <body>
+        Bonjour Monsieur MANIAR,<br/><br/>Je vous presente tous nos voeux pour lannee 2o2o.<br/>
+        Veuillez trouver ci-joint les CVs de nos consultants disponibles prochainement.<br/>
+        <table cellspacing="3" cellpadding="0" border="1">
+            <tbody>
+            <tr>
+                <th>Initiales</th>
+                <th>Disponibilité</th>
+                <th>Expérience</th>
+                <th>Domaines de compétences</th></tr>
+            <tr>
+                <td>AJ</td>
+                <td>20/01/2020</td>
+                <td>4,5 ans</td>
+                <td>Back-end Java JEE | MicroServices ; Spring Boot ; Jhipster ; Angular 8,</td>
+            </tr>
+            <tr>
+                <td>MT</td>
+                <td>20/01/2020</td>
+                <td>7,5 ans</td>
+                <td>FullStack Java JEE | React, Redux, Spring (MVC, Web, WS, Batch, WebSocket) ; Python</td>
+            </tr>
+            </tbody>
+        </table>
+        Je serai ravi de vous rencontrer, vous ou une personne de vos équipes, afin de vous présenter nos activités.<br/><br/>
+        Si ces CVs ne correspondent pas à vos recherches, n’hésitez pas à me le faire savoir et/ou à me rediriger si vous le
+        voulez bien.<br/>
+        Nous sommes une société spécialisée autour des technologies OpenSource et domaines suivants :<br/>
+        <ul>
+            <li>Microservices (Java/EE Backend et Fullstack)</li>
+            <li>DevOps (ou DevSecOps)</li>
+            <li>Data – IA – Machine Learning</li>
+            <li>Cloud (AWS- GCP-OpenStack)</li>
+        </ul>
+        Je vous remercie et me tiens à votre disposition pour tout complément d’information.<br/><br/>
+        Cordialement,
+    </body>
+</html>
