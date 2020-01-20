@@ -42,7 +42,7 @@ public class MainClass {
         clientExtractor.extractClients(clientsFile)
                 .stream()
                 .filter(client -> ChronoUnit.DAYS.between(client.getLastMailSent(), today) > DAYS_NUMBER_SINCE_LAST_MAIL)
-                .map(client -> new Mail(client.getEmail(), from, subject, null, content)).
+                .map(client -> new Mail(client.getEmail(), from, subject, emailService.extractFilesFromFolder(clientsFile), content)).
                 forEach(emailService::send);
     }
 

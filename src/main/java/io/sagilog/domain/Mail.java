@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -13,6 +15,6 @@ public class Mail {
     private String from;
     private String to;
     private String subject;
-    private File attached;
+    private List<File> attached;
     private String content;
 }

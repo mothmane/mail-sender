@@ -11,7 +11,7 @@ public class SMTPConfig {
     private static Properties props;
 
     public static Properties get() {
-        return load("smtp.properties");
+        return load("src/test/resources/smtp.properties");
     }
 
     public static Session session(String username, String password) {
