@@ -18,28 +18,25 @@ import static io.sagilog.cli.CLIParameters.configParameters;
 
 public class MainClass {
 
-    private String clientsFile = "";
-    private String templateFile = "";
-    private String to = "";
-    private String from = "maniar.othmane@gmail.com";
-    private String password = "secret";
-    private String subject = "";
-    private String content = "";
+
+    private static String to = "";
+    private static String content = "";
     private int DAYS_NUMBER_SINCE_LAST_MAIL = 90;
 
 
-    private EMAILService emailService = new EMAILService(SMTPConfig.session(from, password));
     private XLSClientExtractor clientExtractor = new XLSClientExtractor();
+    private EMAILService emailService;
 
-    public MainClass() {
+    public MainClass(EMAILService emailService, String clientsFile, String from, String subject) {
+        this.emailService = emailService;
         try {
-            lunch();
+            lunch(clientsFile, from, subject);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void lunch() throws Exception {
+    public void lunch(String clientsFile, String from, String subject) throws Exception {
 
         final LocalDate today = LocalDate.now();
         clientExtractor.extractClients(clientsFile)
@@ -74,10 +71,21 @@ public class MainClass {
         final CommandLine firstLine= parser.parse(firstOptions, args,true);
 
 
-
         helpMode(options, firstLine);
 
         final CommandLine line = parser.parse(options, args);
+
+
+        String from =line.getOptionValue("from");
+        String subject=line.getOptionValue("subject");
+        String clientsFile=line.getOptionValue("clients");
+        String templateFile=line.getOptionValue("subject");
+
+        String password=readPassword(from);
+
+        new MainClass(new EMAILService(SMTPConfig.session(from, password)), clientsFile, from, subject);
+
+
     }
 
     private static void helpMode(Options options, CommandLine firstLine) {
@@ -88,6 +96,10 @@ public class MainClass {
             formatter.printHelp("Mail Sender", options, true);
             System.exit(0);
         }
+    }
+    private static String readPassword(String username) {
+        char[] password = System.console().readPassword("Enter password for %s user: ", username);
+        return password.toString();
     }
 
 
