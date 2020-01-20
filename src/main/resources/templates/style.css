@@ -1,0 +1,18 @@
+ body {
+    font-size:15px;
+    font-family: "Times New Roman";
+}
+table, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  text-align: center;
+}
+th {
+  font-family: Calibri;
+  text-align: center;
+  border:1pt none windowtext;
+  background: rgb(93,98,92);
+  padding: 0.75pt;
+  color:white;
+  border-spacing: 3px 3px;
+}
