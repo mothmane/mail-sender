@@ -23,7 +23,7 @@ public class EMAILServiceTest {
 
     @Test
     void should_return_2_clients() throws Exception{
-        Mail mail = new Mail("tahifa.med@gmail.com","m.tahifa@sagilog.io","subject",emailService.extractFilesFromFolder(CVDIRECTORY),"bla bla bla ");
+        Mail mail = new Mail("tahifa.med@gmail.com","m.tahifa@sagilog.io","subject",CVLoader.load(CVDIRECTORY),"bla bla bla ");
 
        emailService.send(mail);
 
@@ -32,7 +32,7 @@ public class EMAILServiceTest {
 
     @Test
     void should_return_3_files(){
-        List<File> filesExcpected = emailService.extractFilesFromFolder(CVDIRECTORY);
+        List<File> filesExcpected = CVLoader.load(CVDIRECTORY);
         Assertions.assertThat(filesExcpected.size()).isEqualTo(3);
     }
 }

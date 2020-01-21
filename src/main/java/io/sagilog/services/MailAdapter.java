@@ -30,6 +30,19 @@ public class MailAdapter {
         return writer.toString();
     }
 
+
+    public String getTemplateAsString(String templateFile) {
+        init();
+
+        Template template = velocityEngine.getTemplate(templateFile);
+
+
+
+
+        //TODO
+        return "";
+    }
+
     public VelocityContext toContext(Client client) {
         VelocityContext context = new VelocityContext();
         context.put("firstName", client.getFirstName());

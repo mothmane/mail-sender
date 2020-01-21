@@ -60,20 +60,7 @@ public class EMAILService {
         }
     }
 
-    public List<File> extractFilesFromFolder(String folder){
-        List<File> files = null;
-        Stream<Path> stream =null;
-        try {
-            stream = Files.walk(Paths.get(folder));
-            files = stream.filter(Files::isRegularFile)
-                        .map(Path::toFile)
-                        .collect(Collectors.toList());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        stream.close();
-        return files;
-    }
+
 
     public void send(Mail mail){
         send(mail,false);

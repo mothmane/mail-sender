@@ -28,7 +28,7 @@ public class XLSClientExtractor implements ClientExtractor {
 
 
     public List<Client> extractClients(String fileName)  throws InvalidFormatException,IOException {
-
+        System.out.println("clients file name " + fileName);
         var workbook = WorkbookFactory.create(new File(fileName));
         var sheet = workbook.getSheetAt(DEFAULT_SHEET_INDEX);
 

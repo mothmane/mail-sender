@@ -3,7 +3,9 @@ package io.sagilog.main;
 
 import io.sagilog.config.SMTPConfig;
 import io.sagilog.domain.Mail;
+import io.sagilog.services.CVLoader;
 import io.sagilog.services.EMAILService;
+import io.sagilog.services.MailAdapter;
 import io.sagilog.services.XLSClientExtractor;
 import io.sagilog.ui.SwingMailFrame;
 import lombok.SneakyThrows;
@@ -20,30 +22,39 @@ public class MainClass {
 
 
     private static String to = "";
-    private static String content = "";
     private int DAYS_NUMBER_SINCE_LAST_MAIL = 90;
 
 
     private XLSClientExtractor clientExtractor = new XLSClientExtractor();
     private EMAILService emailService;
 
-    public MainClass(EMAILService emailService, String clientsFile, String from, String subject) {
+    public MainClass(EMAILService emailService,String templatePath, String clientsFile, String from, String subject,String cvFolder) {
         this.emailService = emailService;
+
         try {
-            lunch(clientsFile, from, subject);
+            lunch( templatePath,clientsFile, from, subject, cvFolder);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void lunch(String clientsFile, String from, String subject) throws Exception {
+    public void lunch(String templatePath, String clientsFile, String from, String subject,String cvFolder) throws Exception {
+        System.out.println("STARTING PROCESS");
 
+        var mailAdapter= new MailAdapter();
         final LocalDate today = LocalDate.now();
-        clientExtractor.extractClients(clientsFile)
+        var clients=clientExtractor.extractClients(clientsFile);
+        System.out.println("size client "+clients.size());
+        clients
                 .stream()
-                .filter(client -> ChronoUnit.DAYS.between(client.getLastMailSent(), today) > DAYS_NUMBER_SINCE_LAST_MAIL)
-                .map(client -> new Mail(client.getEmail(), from, subject, emailService.extractFilesFromFolder(clientsFile), content)).
-                forEach(emailService::send);
+               // .filter(client -> ChronoUnit.DAYS.between(client.getLastMailSent(), today) > DAYS_NUMBER_SINCE_LAST_MAIL)
+                .map(client -> new Mail(from, client.getEmail(), subject, CVLoader.load(cvFolder), mailAdapter.createMail(client,templatePath))).
+                forEach(mail -> {
+                    System.out.println("client" + mail);
+                    emailService.send(mail, true);
+                }
+                );
+        System.out.println("ENDING PROCESS");
     }
 
     public void uiLunch() {
@@ -79,11 +90,19 @@ public class MainClass {
         String from =line.getOptionValue("from");
         String subject=line.getOptionValue("subject");
         String clientsFile=line.getOptionValue("clients");
-        String templateFile=line.getOptionValue("subject");
+        String cvFolder=line.getOptionValue("directory");
+
+        String templateFile=line.getOptionValue("template");
 
         String password=readPassword(from);
 
-        new MainClass(new EMAILService(SMTPConfig.session(from, password)), clientsFile, from, subject);
+        System.out.println("from "+ from);
+        System.out.println("subject "+ subject);
+        System.out.println("clientsFile "+ clientsFile);
+        System.out.println("cvFolder "+ cvFolder);
+        System.out.println("templateFile "+ templateFile);
+
+        new MainClass(new EMAILService(SMTPConfig.session(from, password)),templateFile, clientsFile, from, subject,cvFolder);
 
 
     }

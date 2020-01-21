@@ -30,8 +30,15 @@ public class CLIParameters {
                 .build();
 
         final Option clientsFileOption = Option.builder("c")
-                .longOpt("client")
+                .longOpt("clients")
                 .desc("file containing clients data")
+                .hasArg(true)
+                .required(true)
+                .build();
+
+        final Option directoryFolderOption = Option.builder("d")
+                .longOpt("directory")
+                .desc("cv directory")
                 .hasArg(true)
                 .required(true)
                 .build();
@@ -46,6 +53,7 @@ public class CLIParameters {
         options.addOption(subjectOption);
         options.addOption(templateFileOption);
         options.addOption(clientsFileOption);
+        options.addOption(directoryFolderOption);
 
         return options;
     }
