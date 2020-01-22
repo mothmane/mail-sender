@@ -18,12 +18,12 @@ public class EMAILServiceTest {
 
     @BeforeEach
     void init(){
-        emailService=new EMAILService(SMTPConfig.session("tahifa.med@gmail.com",""));
+        emailService=new EMAILService(SMTPConfig.session("maniar.othmane@gmail.com",""));
     }
 
     @Test
     void should_return_2_clients() throws Exception{
-        Mail mail = new Mail("tahifa.med@gmail.com","m.tahifa@sagilog.io","subject",CVLoader.load(CVDIRECTORY),"bla bla bla ");
+        Mail mail = new Mail("maniar.othmane@gmail.com","m.tahifa@sagilog.io","subject",CVLoader.load(CVDIRECTORY),"bla bla bla ");
 
        emailService.send(mail);
 

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class MailAdapterTest {
 
-    private final String TEMPLATE01="src/test/resources/templates/mail.vm";
+    private final String TEMPLATE01="C:/Users/T440s/Desktop/mail-sender/mail.vm";
     private MailAdapter mailAdapter;
 
     @BeforeEach

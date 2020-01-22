@@ -50,8 +50,8 @@ public class MainClass {
                // .filter(client -> ChronoUnit.DAYS.between(client.getLastMailSent(), today) > DAYS_NUMBER_SINCE_LAST_MAIL)
                 .map(client -> new Mail(from, client.getEmail(), subject, CVLoader.load(cvFolder), mailAdapter.createMail(client,templatePath))).
                 forEach(mail -> {
-                    System.out.println("client" + mail);
-                    emailService.send(mail, true);
+//                    System.out.println("client" + mail);
+                    emailService.send(mail);
                 }
                 );
         System.out.println("ENDING PROCESS");
@@ -95,7 +95,6 @@ public class MainClass {
         String templateFile=line.getOptionValue("template");
 
         String password=readPassword(from);
-
         System.out.println("from "+ from);
         System.out.println("subject "+ subject);
         System.out.println("clientsFile "+ clientsFile);
@@ -118,7 +117,7 @@ public class MainClass {
     }
     private static String readPassword(String username) {
         char[] password = System.console().readPassword("Enter password for %s user: ", username);
-        return password.toString();
+        return String.valueOf(password);
     }
 
 

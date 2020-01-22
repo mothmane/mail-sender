@@ -50,11 +50,11 @@ public class EMAILService {
             // Send the complete message parts
             message.setContent(multipart);
 
-            if (dry) {
-                System.out.println("an email should be sent to +"+mail.getTo() + " with subject " + mail.getSubject());
-            } else {
+            System.out.println("an email should be sent to +"+mail.getTo() + " with subject " + mail.getSubject());
+
+            if (!dry)
                 Transport.send(message);
-            }
+
         } catch (MessagingException | IOException mex) {
             mex.printStackTrace();
         }
